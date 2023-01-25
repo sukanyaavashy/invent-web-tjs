@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- include header -->
+<%- include('include/header') %>
+<!-- /include header -->
+
+<!-- Main Site -->
+<main>
+    <div>
+     <table class="table container-sm table-striped caption-top">
+        <div class="goBack">
+          <a onclick="history.back()" class="btn btn-outline-secondary"
+            ><i class="fa-solid fa-angles-left"></i>Go Back</a
+          >
+          <caption class="caption text-center">
+            History
+          </caption>
+        </div>
+
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">S.NO.</th>
+            <th scope="col">Employee Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(function (user,i) { %>
+          <td><%= i + 1 %></td>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.createdAt %></td>
+        </tbody>
+        <% }) %>
+      </table>
+    </div>
+  </main>
+<!-- /Main Site -->
+
+
+<!-- include footer -->
+<%- include('include/footer') %>
+<!-- /include footer -->
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!-- include header -->
+<%- include('include/header') %>
+<!-- /include header -->
+
+<!-- Main Site -->
+<main>
+  <div
+    class="d-flex flex-direction-row justify-content-around align-items-center pt-4"
+  >
+    <div class="">
+      <a href="/" class="btn btn-outline-secondary"
+        ><i class="fa-solid fa-angles-left"></i>Go Home</a
+      >
+    </div>
+
+    <!-- Button trigger modal -->
+    <div class="">
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+      >
+        Create Asset <i class="fa-solid fa-angles-right"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Modal -->
+  <form
+    action="/api/assets"
+    method="POST"
+    id="create_asset"
+    class="d-flex flex-direction-row justify-content-center"
+  >
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Asset Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modelField">
+            <div class="modal-body">
+              <label class="form-label" for="textAreaExample"
+                >Enter Asset Name</label
+              ><br />
+              <input name="name" class="inputField" type="text" autocomplete="off" required />
+            </div>
+            <div class="form-outline modal-body">
+              <label class="form-label" for="textAreaExample"
+                >Description</label
+              >
+              <textarea
+                name="description"
+                type="text"
+                class="form-control"
+                id="textAreaExample"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- </form> -->
+
+  <div
+    class="d-flex flex-direction-row justify-content-center align-items-center pt-4 pb-4 m-4"
+  >
+    <table class="table caption-top table-striped">
+      <caption class="caption text-center">
+        Unassigned Assets
+      </caption>
+      <thead class="table-dark text-center">
+        <tr>
+          <th scope="col">S.NO.</th>
+          <th scope="col">Assets</th>
+          <th scope="col">Description</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <% for (var i = 0; i < assets.length; i++) { %>
+        <tr>
+          <td><%= i + 1 %></td>
+
+          <td>
+            <a class="anchorBtn" href="/api/usersHistory/<%= assets[i]._id %>">
+              <button type="submit" class="assetBtn">
+                <%= assets[i].name %>
+              </button>
+            </a>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-secondary aboutBtn"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="<%= assets[i].description %>"
+            >
+              About
+            </button>
+          </td>
+
+          <td>
+            <% if(assets[i].status === 'waiting'){ %>
+            <button
+              class="btn btn-outline-secondary"
+              data-bs-toggle="modal"
+              data-bs-target="#pending<%= i + 1 %>"
+              id="requestBtn"
+            >
+              Pending
+            </button>
+            <% } else{ %>
+            <button
+              class="btn btn-outline-secondary"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop2<%= i + 1 %>"
+              id="requestBtn"
+            >
+              Request
+            </button>
+
+            <% } %>
+          </td>
+
+          <!--Request Modal -->
+          <form action="/api/updateAssets" method="POST">
+            <div
+              class="modal fade requesForm"
+              id="staticBackdrop2<%= i + 1 %>"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div
+                  class="modal-content d-flex flex-direction-row justify-content-center"
+                >
+                  <div class="modal-body pt-5">
+                    <form class="row">
+                      <div class="form-group">
+                        <input
+                          type="hidden"
+                          name="id"
+                          value="<%=assets[i]._id%>"
+                        />
+                      </div>
+
+                      <div class="col-md-8 mb-3 m-3 m-auto">
+                        <label
+                          for="validationDefault01"
+                          class="form-label inputPassword"
+                          >Enter Employee ID</label
+                        >
+                        <input
+                          type="number"
+                          class="passwordField"
+                          class="form-control passwordField"
+                          userId="validationDefault01"
+                          name="userId"
+                          id="id"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+
+                      <div
+                        class="d-flex flex-direction-row justify-content-center align-items-center pt-5 pb-4"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-secondary m-2"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="submit" class="btn btn-primary m-2">
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!--Pending Modal -->
+          <form action="/api/updateAssets" method="POST">
+            <div
+              class="modal fade"
+              id="pending<%= i + 1 %>"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="pending"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div
+                  class="modal-content d-flex flex-direction-row justify-content-center"
+                >
+                  <div class="modal-body pt-5">
+                    <form class="row">
+                      <div class="form-group">
+                        <input
+                          type="hidden"
+                          name="id"
+                          value="<%=assets[i]._id%>"
+                        />
+                      </div>
+
+                      <div class="col-md-8 mb-3 m-3 m-auto">
+                        <label
+                          for="validationDefault01"
+                          class="form-label inputPassword"
+                          >Enter password</label
+                        >
+                        <input
+                          type="password"
+                          placeholder="Password"
+                          class="form-control passwordField"
+                          password="validationDefault01"
+                          name="password"
+                          id="password"
+                          autocomplete="off"
+                          minlength="6"
+                          required
+                        />
+                      </div>
+
+                      <div
+                        class="d-flex flex-direction-row justify-content-center align-items-center pt-5 pb-4"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-secondary m-2"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="submit" class="btn btn-primary m-2">
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+<!-- /Main Site -->
+</main>
+
+<!-- include footer -->
+<%- include('include/footer') %>
+<!-- /include footer -->
+
+</body>
+</html>

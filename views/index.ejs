@@ -1,0 +1,144 @@
+<!-- include header -->
+<%- include('include/header') %>
+<!-- /include header -->
+
+<!-- Main Site -->
+<main>
+  <div>
+    <!-- table-sm -->
+    <table
+      class="table m-5 container table-striped caption-top"
+      id="assets-table"
+    >
+      <div class="d-flex flex-direction-row justify-content-end UnassignedBtn">
+        <a
+          href="http://localhost:8000/api/assets"
+          class="btn btn-outline-secondary negative-margin-end"
+          >Unassigned <i class="fa-solid fa-angles-right"></i
+        ></a>
+      </div>
+
+      <caption class="caption text-center">
+        Assets
+      </caption>
+
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">S.NO.</th>
+          <th scope="col">Name</th>
+          <th scope="col">Assets</th>
+          <th scope="col">Description</th>
+          <th scope="col">Updated Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach((user, i) => { %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= user.userName %></td>
+
+          <td>
+            <a class="anchorBtn" href="/api/usersHistory/<%= user._id %>">
+              <button type="submit" class="assetBtn"><%= user.asset %></button>
+            </a>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-secondary aboutBtn"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="<%= user.description %>"
+            >
+              About
+            </button>
+          </td>
+
+          <td><%= user.updatedAt %></td>
+          <td>
+            <button
+              class="btn btn-outline-secondary"
+              data-bs-toggle="modal"
+              data-bs-target="#pending<%= i + 1 %>"
+              id="requestBtn"
+            >
+              Click here to Unassign
+            </button>
+          </td>
+
+          <!--Request Modal -->
+          <form action="/api/updateAssets" method="POST">
+            <div
+              class="modal fade"
+              id="pending<%= i + 1 %>"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="pending"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div
+                  class="modal-content d-flex flex-direction-row justify-content-center"
+                >
+                  <div class="modal-body pt-5">
+                    <form class="row">
+                      <div class="form-group">
+                        <input type="hidden" name="id" value="<%=user._id%>" />
+                      </div>
+
+                      <div class="col-md-8 mb-3 m-3 m-auto">
+                        <label
+                          for="validationDefault01"
+                          class="form-label inputPassword"
+                          >Enter password</label
+                        >
+                        <input
+                          type="password"
+                          placeholder="Password"
+                          class="form-control passwordField"
+                          password="validationDefault01"
+                          name="password"
+                          id="password"
+                          autocomplete="off"
+                          minlength="6"
+                          required
+                        />
+                      </div>
+
+                      <div
+                        class="d-flex flex-direction-row justify-content-center align-items-center pt-5 pb-4"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-secondary m-2"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="submit" class="btn btn-primary m-2">
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <!-- Button trigger modal -->
+  </div>
+</main>
+<!-- /Main Site -->
+
+<!-- include footer -->
+<%- include('include/footer') %>
+<!-- /include footer -->
+
+</body>
+</html>

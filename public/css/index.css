@@ -1,0 +1,79 @@
+.navbar {
+  background-color: #faec4b;
+  width: 100%;
+}
+.logo {
+  width: 100px;
+  height: 80px;
+}
+.ims-heading {
+  font-size: 35px;
+}
+.caption {
+  font-size: 35px;
+  color: black;
+}
+.table {
+  text-align: center;
+}
+.UnassignedBtn {
+  margin-bottom: 10px;
+  margin-right: 80px;
+}
+.request-button {
+  height: 200px;
+  background-color: maroon;
+  color: white;
+  text-decoration: none;
+  border-radius: 2px;
+}
+.inputField {
+  width: 420px;
+  padding: 15px;
+}
+.modelField {
+  padding: 20px;
+}
+.clickbtn {
+  width: 300px;
+  height: 200px;
+}
+.requesForm {
+  text-align: center;
+}
+.passwordField {
+  width: 250px;
+}
+.inputPassword {
+  font-size: 18;
+  font-weight: 500;
+}
+.assetBtn {
+  width: 150px;
+  border-radius: 5px;
+  padding: 5px;
+  border-color: grey;
+  border-width: 1px;
+  color: grey;
+}
+.assetBtn:hover {
+  background-color: #6f7378;
+  color: white;
+}
+.sideHeading {
+  color: black;
+  font-weight: bold;
+}
+.goBack {
+  margin-left: 55px;
+  height: 120px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+.body {
+  background: #dedede;
+}
+.page-wrap {
+  min-height: 100vh;
+}
